@@ -37,7 +37,7 @@ This example can be use as the fan out service that manages all secrets for mult
     ```
 4. Create a Key Vault with a secret **mysecret**.
     ```
-    az keyvault create --location $zone --name $kvname --resource-group $rgname
+    az keyvault create --location $region --name $kvname --resource-group $rgname
     az keyvault secret set -n mysecret --vault-name $kvname --value "hellofromdapr"
     ```
 5. Create and configure the identity. In this case the identity is going to be created in the same resource group as the AKS and the Key Vault:
