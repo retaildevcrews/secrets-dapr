@@ -1,0 +1,46 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: nodeapp
+  labels:
+    app: node
+spec:
+  selector:
+    app: node
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000 # expose the node app
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodeapp
+  labels:
+    app: node
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node
+  template:
+    metadata:
+      labels:
+        app: node
+        aadpodidbinding: <$POD_IDENTITY_NAME> # The name you assigned to your pod identity
+      annotations:
+        dapr.io/enabled: "true" # to configure the sidecar
+        dapr.io/app-id: "nodeapp" # to configure the sidecar
+        dapr.io/app-port: "3000" # to configure the sidecar
+    spec:
+      containers:
+        - name: node
+          image: dapriosamples/secretstorenode:latest # Sample app from dapr quickstart
+          env:
+            - name: SECRET_STORE
+              value: "azurekeyvault" # Use key vault as the secret store
+          ports:
+            - containerPort: 3000 # Expose port 3000 for the node app
+          imagePullPolicy: Always

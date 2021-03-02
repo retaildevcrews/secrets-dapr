@@ -8,6 +8,7 @@ This example can be use as the fan out service that manages all secrets for mult
 * Azure Subscription
 * Enough permissions to create role assignments
 
+### Configure environment steps
 1. Configure the following variables:
     ```
     export region=eastus
@@ -61,3 +62,51 @@ This example can be use as the fan out service that manages all secrets for mult
     export POD_IDENTITY_NAMESPACE="default"
     az aks pod-identity add --resource-group $rgname --cluster-name $aksname --namespace ${POD_IDENTITY_NAMESPACE} --name ${POD_IDENTITY_NAME} --identity-resource-id ${IDENTITY_RESOURCE_ID}
     ```
+
+### Configure DAPR and deploy sample app
+Now we will be deploying a sample application adn configuring dapr in the cluster
+
+7. Deploy dapr into aks
+    The quickest way to *init* dapr in your cluster is through **dapr cli**. Follow the steps [here](https://docs.dapr.io/getting-started/install-dapr-cli/) to install **dapr cli**.
+    Confirm you are in the right k8s context. To init dapr:
+    ```
+    dapr init --kubernetes
+    ```
+8. Deploy dapr component *(secretstores.azure.keyvault)*
+    Update values in *component.yaml* file
+    
+    ```
+    apiVersion: dapr.io/v1alpha1
+    kind: Component
+    metadata:
+      name: azurekeyvault
+      namespace: <$POD_IDENTITY_NAMESPACE>
+    spec:
+      type: secretstores.azure.keyvault
+      version: v1
+      metadata:
+        - name: vaultName
+          value: <$kvname>
+        - name: spnClientId
+          value: <$IDENTITY_CLIENT_ID>
+    ```
+    deploy the component to your cluster:
+    ```
+    kubectl apply -f component.yaml
+    ```
+9. Deploy the node app including the podidentity label **aadpodidbinding**
+    Update values in *stack.yaml* file
+
+    ```
+    ...
+    aadpodidbinding: pod-identity-dapr
+    ...
+    ```
+
+    deploy the component to your cluster:
+    ```
+    kubectl apply -f stack.yaml
+    ```
+
+### Source code
+The container used in *stack.yaml* is based on dapr example located here. For tracking purposes a copy of the example code can be located under **daprexample** folder.
