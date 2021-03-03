@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: akvs-secret-app
+  namespace: akv-test
+  labels:
+    app: akvs-secret-app
+spec:
+  selector:
+    matchLabels:
+      app: akvs-secret-app
+  template:
+    metadata:
+      labels:
+        app: akvs-secret-app
+    spec:
+      containers:
+        - name: akv2k8s-env-test
+          image: spvest/akv2k8s-env-test:2.0.1
+          args: ["TEST_SECRET"]
+          env:
+            - name: TEST_SECRET
+              value: secret-inject@azurekeyvault # ref to akvs
