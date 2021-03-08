@@ -1,0 +1,13 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: azurekeyvault
+  namespace: default
+spec:
+  type: secretstores.azure.keyvault
+  version: v1
+  metadata:
+    - name: vaultName
+      value: simplekvdapr0001
+    - name: spnClientId
+      value: c55968d7-bc55-462c-91f1-7a2ceff9e87d
