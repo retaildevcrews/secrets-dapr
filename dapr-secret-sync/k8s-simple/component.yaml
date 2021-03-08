@@ -8,6 +8,6 @@ spec:
   version: v1
   metadata:
     - name: vaultName
-      value: simplekvdapr0002
+      value: <UPDATE WITH KEY VAULT NAME>
     - name: spnClientId
-      value: 1ea3460d-b94d-4a04-a8c0-928e28c7dfc7
+      value: <UPDATE WITH POD IDENTITY>
