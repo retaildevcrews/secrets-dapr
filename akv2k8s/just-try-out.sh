@@ -1,9 +1,8 @@
-#!/bin/bash
-
+#! /bin/bash
 # TODO: use parameters and validation
 # TODO: configure azure cli login / subscription
 
-# configure for your env
+# NOTE: Don't forget to create the following variables
 # export region=eastus
 # export kvname=akv2k8s0008
 # export rgname=akv2k8s-rg08
