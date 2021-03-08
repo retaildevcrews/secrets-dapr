@@ -8,6 +8,6 @@ spec:
   version: v1
   metadata:
     - name: vaultName
-      value: simplekvdapr0001
+      value: simplekvdapr0002
     - name: spnClientId
-      value: c55968d7-bc55-462c-91f1-7a2ceff9e87d
+      value: 1ea3460d-b94d-4a04-a8c0-928e28c7dfc7
