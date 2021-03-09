@@ -15,17 +15,20 @@ This example can be use as the fan out service that manages all secrets for mult
 
 1. Configure the following variables:
 
-    ```bash
-    export region=eastus
-    export kvname=kvdapr0002
-    export rgname=dapr-rg01
-    export aksname=aksdapr0002
-    ```
-
     - `region`: the Azure region where kv/aks/identity will be deployed
     - `kvname`: Key Vault name
     - `rgname`: Resource group name
     - `aksname`: AKS name, also used for the Identity name.
+
+    as an example:
+
+    ```bash
+    export region=eastus
+    export kvname=kvdapr0001
+    export rgname=dapr-rg01
+    export aksname=aksdapr0001
+    ```
+
 
 2. Configure `Azure CLI` with the PodIdentity feature (`preview`). This example follows the configuration described [here](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity)
 
@@ -80,7 +83,7 @@ This example can be use as the fan out service that manages all secrets for mult
 
 ### Configure DAPR and deploy sample app
 
-Now we will be deploying a sample application adn configuring dapr in the cluster
+Now we will be deploying a sample application adn configuring dapr in the cluster. The sample source code can be located [here](https://github.com/dapr/quickstarts/tree/master/secretstore).
 
 1. Deploy dapr into aks
     The quickest way to `init` dapr in your cluster is through `dapr cli`. Follow the steps [here](https://docs.dapr.io/getting-started/install-dapr-cli/) to install `dapr cli`.
