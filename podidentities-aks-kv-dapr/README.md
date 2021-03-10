@@ -136,3 +136,31 @@ Now we will be deploying a sample application adn configuring dapr in the cluste
 ### Source code
 
 The container used in `stack.yaml` is based on dapr example located here. For tracking purposes a copy of the example code can be located under `daprexample` folder.
+
+### Validating the deployment
+
+To validate the deployment is working successfuly:
+
+- get the service public ip address
+  
+  ```bash
+  NODE_APP=$(kubectl get svc nodeapp --output 'jsonpath={.status.loadBalancer.ingress[0].ip}')
+  ```
+
+- retrieve the secret from the app
+  
+  ```bash
+  curl -k http://$NODE_APP/getsecret
+  ```
+
+- change the secret value in the `Key Vault`
+  
+  ```bash
+  az keyvault secret set -n mysecret --vault-name $kvname --value "key-was-rotated"
+  ```
+
+- retrieve the secret from the app and validate the retrieved secret changed
+  
+  ```bash
+  curl -k http://$NODE_APP/getsecret
+  ```
