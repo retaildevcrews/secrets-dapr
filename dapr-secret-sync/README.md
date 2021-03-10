@@ -62,10 +62,10 @@
     ```bash
     # Define variables
     export region=eastus
-    export kvname=simplekvdapr0002
-    export rgname=dapr-rg02
-    export spname=simplekv02
-    export aksname=aksdapr0002
+    export kvname=simplekvdapr0001
+    export rgname=dapr-rg01
+    export spname=simplekv01
+    export aksname=aksdapr0001
 
     # Create Resource Group
     az group create --name $rgname --location $region
@@ -146,10 +146,10 @@
 
     ```bash
     export region=eastus
-    export kvname=simplekvdapr0003
-    export rgname=dapr-rg03
-    export spname=simplekv03
-    export aksname=aksdapr0003
+    export kvname=simplekvdapr0001
+    export rgname=dapr-rg01
+    export spname=simplekv01
+    export aksname=aksdapr0001
     ```
 
 2. Configure `Azure CLI` with the PodIdentity feature (`preview`). This example follows the configuration described [here](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity)
