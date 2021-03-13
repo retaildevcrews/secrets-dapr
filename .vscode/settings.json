@@ -1,0 +1,33 @@
+{
+  "cSpell.words": [
+    "VMSS",
+    "aadpodidbinding",
+    "aksdapr",
+    "aksname",
+    "azurekeyvault",
+    "azuresecret",
+    "eastus",
+    "eventgrid",
+    "hellofromdaprinkv",
+    "hellofromkv",
+    "jsonpath",
+    "keyvault",
+    "keyvaultname",
+    "kubectl",
+    "kubenet",
+    "kvname",
+    "localapp",
+    "mysecret",
+    "mysecrets",
+    "nodeappk",
+    "nodeappkv",
+    "otsv",
+    "rbac",
+    "rgname",
+    "secretstores",
+    "simplekv",
+    "simplekvdapr",
+    "spid",
+    "spname"
+  ]
+}
