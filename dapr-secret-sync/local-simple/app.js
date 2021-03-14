@@ -1,3 +1,4 @@
+// SAMPLE APP FROM DAPR SAMPLES -> https://github.com/dapr/quickstarts/blob/master/secretstore/node/app.js
 // ------------------------------------------------------------
 // Copyright (c) Microsoft Corporation.
 // Licensed under the MIT License.

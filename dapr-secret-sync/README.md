@@ -62,10 +62,10 @@
     ```bash
     # Define variables
     export region=eastus
-    export kvname=simplekvdapr0002
-    export rgname=dapr-rg02
-    export spname=simplekv02
-    export aksname=aksdapr0002
+    export kvname=simplekvdapr0001
+    export rgname=dapr-rg01
+    export spname=simplekv01
+    export aksname=aksdapr0001
 
     # Create Resource Group
     az group create --name $rgname --location $region
@@ -146,13 +146,13 @@
 
     ```bash
     export region=eastus
-    export kvname=simplekvdapr0003
-    export rgname=dapr-rg03
-    export spname=simplekv03
-    export aksname=aksdapr0003
+    export kvname=simplekvdapr0001
+    export rgname=dapr-rg01
+    export spname=simplekv01
+    export aksname=aksdapr0001
     ```
 
-3. Configure `Azure CLI` with the PodIdentity feature (`preview`). This example follows the configuration described [here](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity)
+2. Configure `Azure CLI` with the PodIdentity feature (`preview`). This example follows the configuration described [here](https://docs.microsoft.com/en-us/azure/aks/use-azure-ad-pod-identity)
 
     ```bash
     az feature register --name EnablePodIdentityPreview --namespace Microsoft.ContainerService
@@ -162,7 +162,7 @@
     az extension update --name aks-preview
     ```
 
-4. Create an AKS cluster with managed identities and retrieved the configuration. Keep in mind, Pod Identities do not work with kubenet due to security issues.
+3. Create an AKS cluster with managed identities and retrieved the configuration. Keep in mind, Pod Identities do not work with kubenet due to security issues.
 
     ```bash
     az group create --name $rgname --location $region
@@ -170,14 +170,14 @@
     az aks get-credentials --resource-group $rgname --name $aksname --overwrite-existing
     ```
 
-5. Create a Key Vault with a secret `mysecret` (optional if the executed in the previous exercise).
+4. Create a Key Vault with a secret `mysecret` (optional if the executed in the previous exercise).
 
     ```bash
     az keyvault create --location $region --name $kvname --resource-group $rgname
     az keyvault secret set -n mysecret --vault-name $kvname --value "hellofromdaprinkv"
     ```
 
-6. Create and configure the identity. In this case the identity is going to be created in the same resource group as the AKS and the Key Vault:
+5. Create and configure the identity. In this case the identity is going to be created in the same resource group as the AKS and the Key Vault:
 
     ```bash
     az identity create --resource-group $rgname --name $aksname
@@ -195,7 +195,7 @@
     az keyvault set-policy --name $kvname --spn "$IDENTITY_CLIENT_ID" --secret-permissions get list
     ```
 
-7. Create pod identity
+6. Create pod identity
 
     ```bash
     export POD_IDENTITY_NAME="pod-identity-dapr"
@@ -203,7 +203,7 @@
     az aks pod-identity add --resource-group $rgname --cluster-name $aksname --namespace ${POD_IDENTITY_NAMESPACE} --name ${POD_IDENTITY_NAME} --identity-resource-id ${IDENTITY_RESOURCE_ID}
     ```
 
-8. Install DAPR in the cluster
+7. Install DAPR in the cluster
 
     ```bash
     dapr init --kubernetes
@@ -262,6 +262,8 @@
     ```
 
 ## Let's include `akv2k8s` controller (only sync secrets)
+
+Within dapr-secret-sync folder
 
 1. Configure akv2k8s in aks using Pod Identities
 
