@@ -1,0 +1,46 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: nodeappkv
+  labels:
+    app: node
+spec:
+  selector:
+    app: node
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodeappkv
+  labels:
+    app: node
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: node
+  template:
+    metadata:
+      labels:
+        app: node
+        aadpodidbinding: pod-identity-dapr
+      annotations:
+        dapr.io/enabled: "true"
+        dapr.io/app-id: "nodeappkv"
+        dapr.io/app-port: "3000"
+    spec:
+      containers:
+        - name: node
+          image: dapriosamples/secretstorenode:latest
+          env:
+            - name: SECRET_STORE
+              value: "azurekeyvault"
+          ports:
+            - containerPort: 3000
+          imagePullPolicy: Always
