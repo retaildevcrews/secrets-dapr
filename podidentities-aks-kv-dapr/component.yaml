@@ -1,0 +1,13 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: azurekeyvault
+  namespace: <$POD_IDENTITY_NAMESPACE>
+spec:
+  type: secretstores.azure.keyvault
+  version: v1
+  metadata:
+    - name: vaultName
+      value: <$kvname>
+    - name: spnClientId
+      value: <$IDENTITY_CLIENT_ID>
